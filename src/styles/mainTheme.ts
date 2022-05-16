@@ -1,14 +1,10 @@
-import { DefaultTheme } from 'styled-components';
+import { DefaultTheme } from 'styled-components/native';
 import { BACKGROUND_COLOR, PRIMARY, SECONDARY } from './colors';
 
-const mainTheme: DefaultTheme = {
-  borderRadius: '5px',
-
+export const mainTheme: DefaultTheme = {
   colors: {
     primary: PRIMARY,
     secondary: SECONDARY,
     background: BACKGROUND_COLOR,
   },
 };
-
-export { mainTheme };
