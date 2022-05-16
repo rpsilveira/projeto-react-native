@@ -7,4 +7,7 @@ export const mainTheme: DefaultTheme = {
     secondary: SECONDARY,
     background: BACKGROUND_COLOR,
   },
+  measure: {
+    radius: 8,
+  },
 };
