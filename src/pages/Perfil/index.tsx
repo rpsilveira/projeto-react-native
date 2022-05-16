@@ -1,17 +1,20 @@
-import { BACKGROUND_COLOR, PRIMARY } from "../../styles/colors";
+import { BACKGROUND_COLOR } from "../../styles/colors";
 import { Button, Container, ContainerInput, Input } from "./styles";
 import color from "color";
 import { FontAwesome5 } from '@expo/vector-icons'
 import { useState } from 'react'
 import { Header } from "../../components/Header";
+import { DefaultButton } from "../../components/BaseButton";
 
 const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
-export const Cadastro: React.FC = () => {
+export const Perfil: React.FC = () => {
+    const [currentSecurity, setCurrentSecurity] = useState<boolean>(true)
     const [security, setSecurity] = useState<boolean>(true)
     const [securityConfirm, setSecurityConfirm] = useState<boolean>(true)
     const [loading, setLoading] = useState<boolean>(false)
 
+    const changeCurrentSecurity = () => setCurrentSecurity(current => !current)
     const changeSecurity = () => setSecurity(current => !current)
     const changeSecurityConfirm = () => setSecurityConfirm(current => !current)
     const getIcon = (enabled: boolean) => `eye${enabled ? '-slash' : ''}`
@@ -24,13 +27,28 @@ export const Cadastro: React.FC = () => {
 
     return (
         <>
-            <Header title={'Cadastro'}/>
+            <Header title={'Perfil'}/>
             <Container>
                 <ContainerInput>
                     <Input
                         keyboardType = {'email-address'}
                         placeholder = {'E-MAIL'}
                         placeholderTextColor = {PLACEHOLDER_COLOR}
+                    />
+                </ContainerInput>
+                <ContainerInput>
+                    <Input
+                        keyboardType = {'default'}
+                        placeholder = {'SENHA ATUAL'}
+                        secureTextEntry = {currentSecurity}
+                        placeholderTextColor = {PLACEHOLDER_COLOR}
+                        hasIconRight
+                    />
+                    <FontAwesome5
+                        name = {getIcon(currentSecurity)}
+                        size = {26}
+                        color = {PLACEHOLDER_COLOR}
+                        onPress = {changeCurrentSecurity}
                     />
                 </ContainerInput>
                 <ContainerInput>
@@ -63,7 +81,7 @@ export const Cadastro: React.FC = () => {
                         onPress = {changeSecurityConfirm}
                     />
                 </ContainerInput>
-                <Button title={'CADASTRAR'} loading={loading} onPress={sendForm}/>
+                <Button title={'ALTERAR'} loading={loading} onPress={sendForm}/>
             </Container>
         </>
     )

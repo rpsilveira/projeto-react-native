@@ -32,4 +32,4 @@ export const ContainerInput = styled.View`
 `
 export const Button = styled(DefaultButton)`
     margin-top: 25px;
-`  
+`

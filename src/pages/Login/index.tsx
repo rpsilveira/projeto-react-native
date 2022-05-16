@@ -1,5 +1,5 @@
 import { BACKGROUND_COLOR, PRIMARY } from "../../styles/colors";
-import { Button, ButtonTitle, Container, ContainerInput, ContainerSwitch, Input, LabelSwitch, Link, Switch, Title, TitleBold } from "./styles";
+import { Button, Container, ContainerInput, ContainerSwitch, Input, LabelSwitch, Link, Switch, Title, TitleBold } from "./styles";
 import color from "color";
 import { FontAwesome5 } from '@expo/vector-icons'
 import { useState } from 'react'
@@ -9,9 +9,16 @@ const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 export const Login: React.FC = () => {
     const [security, setSecurity] = useState<boolean>(true)
     const [saveLogin, setSaveLogin] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
 
     const changeSecurity = () => setSecurity(current => !current)
     const changeSaveLogin = () => setSaveLogin(current => !current)
+
+    const sendForm = async() => {
+        setLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 3000))
+        setLoading(false);
+    }
 
     return (
         <Container>
@@ -38,9 +45,7 @@ export const Login: React.FC = () => {
                     onPress = {changeSecurity}
                 />
             </ContainerInput>
-            <Button onPress = {() => {}}>
-                <ButtonTitle>ENTRAR</ButtonTitle>
-            </Button>
+            <Button title={'ENTRAR'} loading={loading} onPress={sendForm}/>
             <ContainerSwitch>
                 <Switch
                     onChange = {changeSaveLogin}
