@@ -4,7 +4,7 @@ import { BKG } from "./styles";
 export const BaseContainer: React.FC = ({children}) => {
     return (
         <BKG>
-            <>{children}</>
+            {children}
         </BKG>
     )
 }
