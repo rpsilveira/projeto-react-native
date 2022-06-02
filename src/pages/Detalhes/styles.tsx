@@ -13,7 +13,7 @@ export const Box = styled.View`
     background-color: ${props => color(props.theme.colors.background).darken(0.3).hex()};
     align-self: stretch;
     margin: 5px 0;
-    border-radius: ${props => props.theme.measure.radius};
+    border-radius: ${props => props.theme.measure.radius}px;
 `
 
 export const LastBox = styled(Box)`
