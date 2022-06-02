@@ -7,6 +7,7 @@ import { BaseContainer } from './src/components/BaseContainer';
 import { Login } from './src/pages/Login';
 import { Cadastro } from './src/pages/Cadastro';
 import { Perfil } from './src/pages/Perfil';
+import { Detalhes } from './src/pages/Detalhes';
 
 export default function App() {
   return (
@@ -17,7 +18,7 @@ export default function App() {
         translucent = {false}
       />
       <BaseContainer>
-        <Perfil />
+        <Detalhes />
       </BaseContainer>
     </ThemeProvider>
   );
