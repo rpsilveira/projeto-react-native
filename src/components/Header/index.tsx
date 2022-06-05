@@ -5,18 +5,20 @@ import { PRIMARY } from "../../styles/colors";
 
 interface HeaderProps {
     title?: string;
+    backFalse?: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({children, title}) => {
+export const Header: React.FC<HeaderProps> = ({children, title, backFalse=false}) => {
     return (
         <BKG>
             <LeftContainer>
+                {!backFalse&&(
                 <FontAwesome5
                     name = {'chevron-left'}
                     size = {20}
                     color = {PRIMARY}
                     onPress = {() => {}}
-                />
+                />)}
             </LeftContainer>
             <TitleContainer>
                 {!!title ? (<Title>{title}</Title>) : (children)}
