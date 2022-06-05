@@ -57,6 +57,7 @@ export const ContainerSwitch = styled.View`
     align-self: flex-end;
 `
 export const Link = styled.Text`
+    font-size: 18px;
     color: ${props => props.theme.colors.primary};
     align-self: flex-end;
     margin-top: 20px;

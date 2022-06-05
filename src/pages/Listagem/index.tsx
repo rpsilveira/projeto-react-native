@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import style, { Container, Title, TitleBold } from "./styles";
+import { useNavigation } from '@react-navigation/native';
 import { Header } from "../../components/Header";
 import { FlatList } from "react-native";
 import { ButtonCard } from "../../components/ButtonCard";
+import { BaseContainer } from "../../components/BaseContainer";
 
 interface ItemsProps{
     id: number;
@@ -16,16 +18,25 @@ interface ItemsProps{
 export const Listagem: React.FC = () => {
 
     const [active, setActive] = useState<number>(0);
+    const navigation = useNavigation<any>();
 
     return (
-        <>
+        <BaseContainer>
             <Header backFalse>
                 <Title><TitleBold>My</TitleBold>Collection</Title>
             </Header>
             <Container>                
                 <FlatList<ItemsProps>
                     renderItem={({item}) => (
-                        <ButtonCard item={item} activeId={active} setActive={setActive} addCard={() => {}} goToDetail={() => {}}/>
+                        <ButtonCard
+                            item={item}
+                            activeId={active}
+                            setActive={setActive}
+                            addCard={() => {}}
+                            goToDetail={(id) => {
+                                navigation.push('Detalhes', {id})
+                            }}
+                        />
                     )}
                     keyExtractor={(item) => `${item.id}`}
                     style={style.flatList}
@@ -58,6 +69,6 @@ export const Listagem: React.FC = () => {
                     ]}
                 />
             </Container>
-        </>
+        </BaseContainer>
     )
 }

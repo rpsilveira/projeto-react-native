@@ -5,6 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import { useState } from 'react'
 import { Header } from "../../components/Header";
 import { DefaultButton } from "../../components/BaseButton";
+import { BaseContainer } from "../../components/BaseContainer";
 
 const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
@@ -26,8 +27,8 @@ export const Perfil: React.FC = () => {
     }
 
     return (
-        <>
-            <Header title={'Perfil'}/>
+        <BaseContainer>
+            <Header title={'Perfil'} backFalse />
             <Container>
                 <ContainerInput>
                     <Input
@@ -83,6 +84,6 @@ export const Perfil: React.FC = () => {
                 </ContainerInput>
                 <Button title={'ALTERAR'} loading={loading} onPress={sendForm}/>
             </Container>
-        </>
+        </BaseContainer>
     )
 }

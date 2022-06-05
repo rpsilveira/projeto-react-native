@@ -4,6 +4,7 @@ import color from "color";
 import { FontAwesome5 } from '@expo/vector-icons'
 import { useState } from 'react'
 import { Header } from "../../components/Header";
+import { BaseContainer } from "../../components/BaseContainer";
 
 const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
@@ -23,8 +24,8 @@ export const Cadastro: React.FC = () => {
     }
 
     return (
-        <>
-            <Header title={'Cadastro'}/>
+        <BaseContainer>
+            <Header title={'Cadastro'} />
             <Container>
                 <ContainerInput>
                     <Input
@@ -65,6 +66,6 @@ export const Cadastro: React.FC = () => {
                 </ContainerInput>
                 <Button title={'CADASTRAR'} loading={loading} onPress={sendForm}/>
             </Container>
-        </>
+        </BaseContainer>
     )
 }

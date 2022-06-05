@@ -3,11 +3,12 @@ import { Box, Container, Title, Text, ItemContainer, ActionColumn, Trash } from 
 import { Header } from "../../components/Header";
 import { DefaultButton } from "../../components/BaseButton";
 import { ScrollView } from "react-native";
+import { BaseContainer } from "../../components/BaseContainer";
 
 export const Carrinho: React.FC = () => {
     return (
-        <>
-            <Header title={'Meu Carrinho'}/>
+        <BaseContainer>
+            <Header title={'Meu Carrinho'} backFalse />
             <ScrollView>
                 <Container>
                     <Box marginBottom={10}>
@@ -37,6 +38,6 @@ export const Carrinho: React.FC = () => {
                     <DefaultButton title={'COMPRAR'} onPress={()=>{}}/>
                 </Container>
             </ScrollView>
-        </>
+        </BaseContainer>
     )
 }
