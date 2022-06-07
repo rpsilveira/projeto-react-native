@@ -22,14 +22,23 @@ export const Input = styled.TextInput<InputProps>`
         margin-right: 20px;
     `};
 `
-export const ContainerInput = styled.View`
+
+interface InputContainerProps{
+    error?: boolean
+}
+
+export const ContainerInput = styled.View<InputContainerProps>`
     align-self: stretch;
     background-color: ${props => color(props.theme.colors.background).darken(0.25).hex()};
     padding: 10px 20px;
     margin: 5px 0;
     border-radius: ${props => props.theme.measure.radius}px;
     flex-direction: row;
+    ${props => props.error&&css`
+        border-width: 3px;
+        border-color: ${props.theme.colors.danger};
+    `};
 `
 export const Button = styled(DefaultButton)`
     margin-top: 25px;
-`  
+`

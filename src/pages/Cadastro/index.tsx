@@ -1,23 +1,30 @@
-import { BACKGROUND_COLOR, PRIMARY } from "../../styles/colors";
-import { Button, Container, ContainerInput, Input } from "./styles";
+import { BACKGROUND_COLOR } from "../../styles/colors";
+import { Button, Container } from "./styles";
 import color from "color";
-import { FontAwesome5 } from '@expo/vector-icons'
 import { useState } from 'react'
 import { Header } from "../../components/Header";
+import { Input } from "../../components/Input";
 import { BaseContainer } from "../../components/BaseContainer";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { cadastroValidator } from "./cadastro.validator";
 
 const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
 export const Cadastro: React.FC = () => {
-    const [security, setSecurity] = useState<boolean>(true)
-    const [securityConfirm, setSecurityConfirm] = useState<boolean>(true)
+
     const [loading, setLoading] = useState<boolean>(false)
+    const { control, handleSubmit, formState: {errors} } = useForm({
+        resolver: yupResolver(cadastroValidator),
+        defaultValues: {
+            email: '',
+            password: '',
+            confirm: '',
+        }
+    });
 
-    const changeSecurity = () => setSecurity(current => !current)
-    const changeSecurityConfirm = () => setSecurityConfirm(current => !current)
-    const getIcon = (enabled: boolean) => `eye${enabled ? '-slash' : ''}`
-
-    const sendForm = async() => {
+    const onSubmit = async(data: any)  => {
+        console.log(data);
         setLoading(true);
         await new Promise(resolve => setTimeout(resolve, 3000))
         setLoading(false);
@@ -27,44 +34,64 @@ export const Cadastro: React.FC = () => {
         <BaseContainer>
             <Header title={'Cadastro'} />
             <Container>
-                <ContainerInput>
-                    <Input
-                        keyboardType = {'email-address'}
-                        placeholder = {'E-MAIL'}
-                        placeholderTextColor = {PLACEHOLDER_COLOR}
-                    />
-                </ContainerInput>
-                <ContainerInput>
-                    <Input
-                        keyboardType = {'default'}
-                        placeholder = {'SENHA'}
-                        secureTextEntry = {security}
-                        placeholderTextColor = {PLACEHOLDER_COLOR}
-                        hasIconRight
-                    />
-                    <FontAwesome5
-                        name = {getIcon(security)}
-                        size = {26}
-                        color = {PLACEHOLDER_COLOR}
-                        onPress = {changeSecurity}
-                    />
-                </ContainerInput>
-                <ContainerInput>
-                    <Input
-                        keyboardType = {'default'}
-                        placeholder = {'CONFIRME A SENHA'}
-                        secureTextEntry = {securityConfirm}
-                        placeholderTextColor = {PLACEHOLDER_COLOR}
-                        hasIconRight
-                    />
-                    <FontAwesome5
-                        name = {getIcon(securityConfirm)}
-                        size = {26}
-                        color = {PLACEHOLDER_COLOR}
-                        onPress = {changeSecurityConfirm}
-                    />
-                </ContainerInput>
-                <Button title={'CADASTRAR'} loading={loading} onPress={sendForm}/>
+                <Controller
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        <Input
+                            keyboardType = {'email-address'}
+                            placeholder = {'E-MAIL'}
+                            placeholderTextColor = {PLACEHOLDER_COLOR}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                            error={errors.email?.message}
+                        />
+                    )}
+                    name="email"
+                />
+
+                <Controller
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        <Input
+                            placeholder = {'SENHA'}
+                            secureTextEntry
+                            placeholderTextColor = {PLACEHOLDER_COLOR}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                            error={errors.password?.message}
+                        />
+                    )}
+                    name="password"
+                />
+
+                <Controller
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        <Input
+                            placeholder = {'CONFIRME A SENHA'}
+                            secureTextEntry
+                            placeholderTextColor = {PLACEHOLDER_COLOR}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                            error={errors.confirm?.message}
+                        />
+                    )}
+                    name="confirm"
+                />
+
+                <Button title={'CADASTRAR'} loading={loading} onPress={handleSubmit(onSubmit)}/>
             </Container>
         </BaseContainer>
     )

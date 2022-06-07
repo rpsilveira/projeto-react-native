@@ -6,8 +6,8 @@ import { PrivateNavigation } from "./PrivateNavigation";
 export const Routes: React.FC = () => {
     return(
         <NavigationContainer>
-            {/*<OpenNavigation />*/}
-            <PrivateNavigation />
+            <OpenNavigation />
+            {/*<PrivateNavigation />*/}
         </NavigationContainer>
     )
 }
