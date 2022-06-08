@@ -8,12 +8,19 @@ import { BaseContainer } from "../../components/BaseContainer";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { cadastroValidator } from "./cadastro.validator";
+import { useToast } from "native-base";
+import { ToastLayout } from "../../components/ToastLayout";
+import { api } from "../../api";
+import { useNavigation } from "@react-navigation/native";
 
 const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
 export const Cadastro: React.FC = () => {
-
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoad] = useState<boolean>(false)
+    
+    const toast = useToast();
+    const navigation = useNavigation();
+    
     const { control, handleSubmit, formState: {errors} } = useForm({
         resolver: yupResolver(cadastroValidator),
         defaultValues: {
@@ -23,11 +30,26 @@ export const Cadastro: React.FC = () => {
         }
     });
 
-    const onSubmit = async(data: any)  => {
-        console.log(data);
-        setLoading(true);
-        await new Promise(resolve => setTimeout(resolve, 3000))
-        setLoading(false);
+    const onSubmit = async(data: any) => {
+        setLoad(true);
+        try {
+            const response = await api.post('users', data);
+            navigation.goBack();
+            toast.show({
+                placement: "top-right",
+                render: ({id}) => {
+                    return ToastLayout.success({id, description: 'usuário cadastrado com sucesso!', close: toast.close})
+                }
+            })
+        } catch(e: any) {
+            toast.show({
+                placement: "top-right",
+                render: ({id}) => {
+                    return ToastLayout.error({id, description: e.message, close: toast.close});
+                }
+            })
+        }
+        setLoad(false);
     }
 
     return (

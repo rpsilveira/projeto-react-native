@@ -5,18 +5,21 @@ import color from 'color';
 import { BACKGROUND_COLOR } from './src/styles/colors';
 import { BaseContainer } from './src/components/BaseContainer';
 import { Routes } from './src/routes';
+import { AuthProvider } from './src/hooks/Auth.hooks';
 
 export default function App() {
     return (
         <ThemeProvider theme={mainTheme}>
-            <BaseContainer>
-                <StatusBar
-                    style = "light"
-                    backgroundColor = {color(BACKGROUND_COLOR).darken(0.6).hex()}
-                    translucent = {false}
-                />
-                <Routes />
-            </BaseContainer>
+            <AuthProvider>            
+                <BaseContainer>
+                    <StatusBar
+                        style = "light"
+                        backgroundColor = {color(BACKGROUND_COLOR).darken(0.6).hex()}
+                        translucent = {false}
+                    />
+                    <Routes />
+                </BaseContainer>
+            </AuthProvider>
         </ThemeProvider>
     );
 }
