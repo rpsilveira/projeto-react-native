@@ -1,11 +1,11 @@
-import { BACKGROUND_COLOR } from "../../styles/colors";
+import { BACKGROUND_COLOR, SECONDARY } from "../../styles/colors";
 import { Button, Container, ContainerInput, Input } from "./styles";
 import color from "color";
 import { FontAwesome5 } from '@expo/vector-icons'
 import { useState } from 'react'
 import { Header } from "../../components/Header";
-import { DefaultButton } from "../../components/BaseButton";
 import { BaseContainer } from "../../components/BaseContainer";
+import { useAuth } from "../../hooks/Auth.hooks";
 
 const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
@@ -13,7 +13,9 @@ export const Perfil: React.FC = () => {
     const [currentSecurity, setCurrentSecurity] = useState<boolean>(true)
     const [security, setSecurity] = useState<boolean>(true)
     const [securityConfirm, setSecurityConfirm] = useState<boolean>(true)
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoad] = useState<boolean>(false)
+
+    const { logout } = useAuth();
 
     const changeCurrentSecurity = () => setCurrentSecurity(current => !current)
     const changeSecurity = () => setSecurity(current => !current)
@@ -21,9 +23,9 @@ export const Perfil: React.FC = () => {
     const getIcon = (enabled: boolean) => `eye${enabled ? '-slash' : ''}`
 
     const sendForm = async() => {
-        setLoading(true);
+        setLoad(true);
         await new Promise(resolve => setTimeout(resolve, 3000))
-        setLoading(false);
+        setLoad(false);
     }
 
     return (
@@ -83,6 +85,7 @@ export const Perfil: React.FC = () => {
                     />
                 </ContainerInput>
                 <Button title={'ALTERAR'} loading={loading} onPress={sendForm}/>
+                <Button style={{backgroundColor: SECONDARY}} title={'LOGOUT'} loading={loading} onPress={logout}/>
             </Container>
         </BaseContainer>
     )

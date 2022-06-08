@@ -1,7 +1,5 @@
 import styled, {css} from "styled-components/native";
 import { StyleSheet } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons'
-import color from "color";
 
 export const Container = styled.View`
     flex: 1;

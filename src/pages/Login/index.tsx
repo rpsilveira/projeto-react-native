@@ -8,7 +8,6 @@ import { Input } from "../../components/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginValidator } from "../Login/login.validator";
 import { Controller, useForm } from "react-hook-form";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useToast } from "native-base";
 import { ToastLayout } from "../../components/ToastLayout";
 import { api } from "../../api";
@@ -16,15 +15,11 @@ import { useAuth, UserProps } from "../../hooks/Auth.hooks";
 
 const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
-interface SaveLoginProps {
-    user?: UserProps;
-}
-
 export const Login: React.FC = () => {
     const [saveLogin, setSaveLogin] = useState<boolean>(false)
     const [loading, setLoad] = useState<boolean>(false)
 
-    const { setUser } = useAuth();
+    const { getSaveLogin, login } = useAuth();
     const toast = useToast();
     const navigation = useNavigation<any>();
 
@@ -34,30 +29,9 @@ export const Login: React.FC = () => {
             email: '',
             password: '',
         }
-    });      
+    });
 
     const changeSaveLogin = () => setSaveLogin(current => !current)
-
-    const storeSaveLogin = async(user?: UserProps) => {
-        try {
-            const jsonValue = JSON.stringify({user});
-            await AsyncStorage.setItem('@myCollection/saveLogin', jsonValue);
-        } catch(e) {
-            //saving error
-        }
-    }
-
-    const getSaveLogin: () => Promise<SaveLoginProps> = async() => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('@myCollection/saveLogin');
-            if (jsonValue != null) {
-                return JSON.parse(jsonValue);
-            }
-        } catch(e) {
-
-        }
-        return {user: undefined}
-    }
 
     const onSubmit = async(dataForm: any) => {
         setLoad(true);
@@ -72,8 +46,7 @@ export const Login: React.FC = () => {
 
             if (!!data) {
                 const { email, id } = data;
-                await storeSaveLogin(saveLogin ? {email, id} : undefined);
-                setUser({email, id});
+                await login({email, id}, saveLogin);
             } else {
                 toast.show({
                     placement: "top-right",
@@ -96,10 +69,7 @@ export const Login: React.FC = () => {
 
     useEffect(() => {
         (async() => {
-            const data = await getSaveLogin();
-            if (data.user) {
-                setUser(data.user);
-            }
+            await getSaveLogin();
         })()
     }, []);
 
