@@ -4,7 +4,6 @@
     {
       "email": "a@b.com",
       "password": "123456",
-      "confirm": "123456",
       "id": 1
     }
   ],

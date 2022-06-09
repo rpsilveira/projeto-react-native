@@ -33,8 +33,13 @@ export const Cadastro: React.FC = () => {
     const onSubmit = async(data: any) => {
         setLoad(true);
         try {
-            const response = await api.post('users', data);
+            const response = await api.post('users', {
+                email: data.email,
+                password: data.password,
+            });
+
             navigation.goBack();
+            
             toast.show({
                 placement: "top-right",
                 render: ({id}) => {
