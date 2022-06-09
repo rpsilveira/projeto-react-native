@@ -1,7 +1,7 @@
 import { BACKGROUND_COLOR, PRIMARY, SECONDARY } from "../../styles/colors";
 import { Button, Container, ContainerSwitch, LabelSwitch, Link, Switch, Title, TitleBold } from "./styles";
 import color from "color";
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BaseContainer } from "../../components/BaseContainer";
 import { useNavigation } from '@react-navigation/native';
 import { Input } from "../../components/Input";

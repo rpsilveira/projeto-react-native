@@ -1,7 +1,7 @@
 import { BACKGROUND_COLOR } from "../../styles/colors";
 import { Button, Container } from "./styles";
 import color from "color";
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { BaseContainer } from "../../components/BaseContainer";

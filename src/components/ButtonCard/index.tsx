@@ -42,9 +42,9 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({item, goToDetail, addCard
                     <TouchableWithoutFeedback onPress={changeActive}>
                         <ContainerCard>
                             <ItemTitle ellipsizeMode={'tail'} numberOfLines={2}> {item.name} </ItemTitle>
-                            <ItemTitleBold> R$ {item.value.toFixed(2).toString().replace('.',',')} </ItemTitleBold>
-                            <DefaultButton title={'DETALHES'} onPress={goToDetail as any}/>
-                            <DefaultButton title={'+ CARRINHO'} onPress={addCard as any}/>
+                            <ItemTitleBold>R$ {item.value.toFixed(2).toString().replace('.',',')}</ItemTitleBold>
+                            <DefaultButton title={'DETALHES'} onPress={() => goToDetail(item.id)}/>
+                            <DefaultButton title={'+ CARRINHO'} onPress={() => addCard(item.id)}/>
                         </ContainerCard>
                     </TouchableWithoutFeedback>
                 )}
