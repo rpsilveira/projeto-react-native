@@ -9,6 +9,7 @@ import { api } from "../../api";
 import { ToastLayout } from "../../components/ToastLayout";
 import { useRoute } from "@react-navigation/native";
 import { DetalhesScreenRouteProp } from "../../routes/PrivateNavigation";
+import { formatNumber } from "../../utils/util";
 
 interface ItemsProps{
     id: number;
@@ -61,7 +62,7 @@ export const Detalhes: React.FC = () => {
                     </Box>
                     <Box>
                         <Title>VALOR</Title>
-                        <Text>R$ {data?.value.toFixed(2).toString().replace('.',',')}</Text>
+                        <Text>R$ {formatNumber(data?.value, 2)}</Text>
                     </Box>
                     <Box>
                         <Title>DESCRIÇÃO</Title>

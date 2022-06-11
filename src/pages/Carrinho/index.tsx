@@ -34,8 +34,7 @@ export const Carrinho: React.FC = () => {
                         <Text noFlex>TOTAL</Text>
                         <Title marginLeft={10} noFlex>R$ 54,00</Title>
                     </ItemContainer>
-                    <DefaultButton title={'ADICIONAR AO CARRINHO'} onPress={()=>{}}/>
-                    <DefaultButton title={'COMPRAR'} onPress={()=>{}}/>
+                    <DefaultButton title={'FINALIZAR COMPRA'} onPress={()=>{}}/>
                 </Container>
             </ScrollView>
         </BaseContainer>

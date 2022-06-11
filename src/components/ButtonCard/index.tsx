@@ -2,6 +2,7 @@ import React from "react";
 import { ContainerCard, ImageCard, ItemTitle, ItemTitleBold } from "./styles";
 import { DefaultButton } from "../../components/BaseButton";
 import { NativeModules, LayoutAnimation, TouchableWithoutFeedback } from "react-native";
+import { formatNumber } from "../../utils/util";
 const { UIManager } = NativeModules;
 
 UIManager.setLayoutAnimationEnabledExperimental &&
@@ -42,7 +43,7 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({item, goToDetail, addCard
                     <TouchableWithoutFeedback onPress={changeActive}>
                         <ContainerCard>
                             <ItemTitle ellipsizeMode={'tail'} numberOfLines={2}> {item.name} </ItemTitle>
-                            <ItemTitleBold>R$ {item.value.toFixed(2).toString().replace('.',',')}</ItemTitleBold>
+                            <ItemTitleBold>R$ {formatNumber(item.value, 2)}</ItemTitleBold>
                             <DefaultButton title={'DETALHES'} onPress={() => goToDetail(item.id)}/>
                             <DefaultButton title={'+ CARRINHO'} onPress={() => addCard(item.id)}/>
                         </ContainerCard>
