@@ -6,19 +6,22 @@ import { BACKGROUND_COLOR } from './src/styles/colors';
 import { BaseContainer } from './src/components/BaseContainer';
 import { Routes } from './src/routes';
 import { AuthProvider } from './src/hooks/Auth.hooks';
+import { NativeBaseProvider } from "native-base";
 
 export default function App() {
     return (
         <ThemeProvider theme={mainTheme}>
-            <AuthProvider>            
-                <BaseContainer>
-                    <StatusBar
-                        style = "light"
-                        backgroundColor = {color(BACKGROUND_COLOR).darken(0.6).hex()}
-                        translucent = {false}
-                    />
-                    <Routes />
-                </BaseContainer>
+            <AuthProvider>  
+                <NativeBaseProvider>          
+                    <BaseContainer>
+                        <StatusBar
+                            style = "light"
+                            backgroundColor = {color(BACKGROUND_COLOR).darken(0.6).hex()}
+                            translucent = {false}
+                        />
+                        <Routes />
+                    </BaseContainer>
+                </NativeBaseProvider>
             </AuthProvider>
         </ThemeProvider>
     );
