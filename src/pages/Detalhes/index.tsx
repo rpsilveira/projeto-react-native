@@ -7,9 +7,10 @@ import { BaseContainer } from "../../components/BaseContainer";
 import { useToast } from "native-base";
 import { api } from "../../api";
 import { ToastLayout } from "../../components/ToastLayout";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { DetalhesScreenRouteProp } from "../../routes/PrivateNavigation";
 import { formatNumber } from "../../utils/util";
+import { useCarrinhoStore } from "../../store/carrinho.store";
 
 interface ItemsProps{
     id: number;
@@ -25,9 +26,24 @@ export const Detalhes: React.FC = () => {
     const [data, setData] = useState<ItemsProps|undefined>();
     const toast = useToast();
     const route = useRoute<DetalhesScreenRouteProp>();
+    const navigation = useNavigation<any>();
 
-    const change = async () => {
-        await (new Promise(resolve => setTimeout(resolve, 2000)));
+    const addItem = useCarrinhoStore(state => state.addItem);
+    
+    const addCart = () => {
+        if (data) {
+            addItem({
+                jogoId: data.id,
+                titulo: data.name,
+                valor: data.value,
+            })
+        }
+    }    
+
+    const addAndGoToCart = () => {
+        addCart();
+        navigation.goBack();
+        navigation.navigate('Carrinho');
     }
 
     const getData = async () => {
@@ -68,8 +84,8 @@ export const Detalhes: React.FC = () => {
                         <Title>DESCRIÇÃO</Title>
                         <Text>{data?.description}</Text>
                     </Box>
-                    <DefaultButton title={'ADICIONAR AO CARRINHO'} onPress={change}/>
-                    <DefaultButton title={'COMPRAR'} onPress={change}/>
+                    <DefaultButton title={'ADICIONAR AO CARRINHO'} onPress={addCart}/>
+                    <DefaultButton title={'COMPRAR'} onPress={addAndGoToCart}/>
                 </Container>
             </ScrollView>
         </BaseContainer>

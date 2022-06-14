@@ -19,13 +19,13 @@ interface ItemsProps{
 
 interface ButtonCardProps{
     item: ItemsProps;
-    addCard: (id: number) => void;
+    addCart: (item: ItemsProps) => void;
     goToDetail: (id: number) => void;
     setActive: (id?: number) => void;
     activeId?: number;
 }
 
-export const ButtonCard: React.FC<ButtonCardProps> = ({item, goToDetail, addCard, activeId, setActive}) => {
+export const ButtonCard: React.FC<ButtonCardProps> = ({item, goToDetail, addCart, activeId, setActive}) => {
     
     const changeActive = () => {
         LayoutAnimation.linear();
@@ -45,7 +45,7 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({item, goToDetail, addCard
                             <ItemTitle ellipsizeMode={'tail'} numberOfLines={2}> {item.name} </ItemTitle>
                             <ItemTitleBold>R$ {formatNumber(item.value, 2)}</ItemTitleBold>
                             <DefaultButton title={'DETALHES'} onPress={() => goToDetail(item.id)}/>
-                            <DefaultButton title={'+ CARRINHO'} onPress={() => addCard(item.id)}/>
+                            <DefaultButton title={'+ CARRINHO'} onPress={() => addCart(item as any)}/>
                         </ContainerCard>
                     </TouchableWithoutFeedback>
                 )}

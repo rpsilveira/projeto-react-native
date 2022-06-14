@@ -8,6 +8,7 @@ import { BaseContainer } from "../../components/BaseContainer";
 import { api } from "../../api";
 import { useToast } from "native-base";
 import { ToastLayout } from "../../components/ToastLayout";
+import { useCarrinhoStore } from "../../store/carrinho.store";
 
 interface ItemsProps{
     id: number;
@@ -24,6 +25,15 @@ export const Listagem: React.FC = () => {
     const [list, setList] = useState<ItemsProps[]>([]);
     const toast = useToast();
     const navigation = useNavigation<any>();
+    const addItem = useCarrinhoStore(state => state.addItem);
+    
+    const addCart = (item: ItemsProps) => {
+        addItem({
+            jogoId: item.id,
+            titulo: item.name,
+            valor: item.value,
+        })
+    }
 
     const getData = async () => {
         try {
@@ -55,7 +65,7 @@ export const Listagem: React.FC = () => {
                             item={item}
                             activeId={active}
                             setActive={setActive}
-                            addCard={() => {}}
+                            addCart={addCart}
                             goToDetail={(id) => {
                                 navigation.push('Detalhes', {id})
                             }}

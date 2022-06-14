@@ -1,5 +1,29 @@
 {
-  "pedidos": [],
+  "pedidos": [
+    {
+      "userId": 1,
+      "userEmail": "a@b.com",
+      "total": 181.09,
+      "items": [
+        {
+          "jogoId": 3,
+          "titulo": "Cuphead",
+          "valor": 89.14
+        },
+        {
+          "jogoId": 2,
+          "titulo": "DRAGON BALL Z: KAKAROT",
+          "valor": 81.68
+        },
+        {
+          "jogoId": 4,
+          "titulo": "Crash Bandicoot™ N. Sane Trilogy",
+          "valor": 10.27
+        }
+      ],
+      "id": 1
+    }
+  ],
   "users": [
     {
       "email": "a@b.com",
