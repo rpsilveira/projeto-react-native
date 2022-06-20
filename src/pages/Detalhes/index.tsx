@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Box, Container, Image, Title, Text } from "./styles";
 import { Header } from "../../components/Header";
 import { DefaultButton } from "../../components/BaseButton";
@@ -11,6 +11,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { DetalhesScreenRouteProp } from "../../routes/PrivateNavigation";
 import { formatNumber } from "../../utils/util";
 import { useCarrinhoStore } from "../../store/carrinho.store";
+import { useHistoricoStore } from "../../store/historico.store";
 
 interface ItemsProps{
     id: number;
@@ -29,7 +30,12 @@ export const Detalhes: React.FC = () => {
     const navigation = useNavigation<any>();
 
     const addItem = useCarrinhoStore(state => state.addItem);
-    
+    const historico = useHistoricoStore(state => state.historico);
+
+    const isMine = useMemo(
+        () => !!data ? historico.map(itemHistorico => itemHistorico.jogoId).includes(data.id) : false
+    ,[historico, data]);
+
     const addCart = () => {
         if (data) {
             addItem({
@@ -84,8 +90,12 @@ export const Detalhes: React.FC = () => {
                         <Title>DESCRIÇÃO</Title>
                         <Text>{data?.description}</Text>
                     </Box>
-                    <DefaultButton title={'ADICIONAR AO CARRINHO'} onPress={addCart}/>
-                    <DefaultButton title={'COMPRAR'} onPress={addAndGoToCart}/>
+                    {!isMine&&(
+                        <>
+                            <DefaultButton title={'ADICIONAR AO CARRINHO'} onPress={addCart}/>
+                            <DefaultButton title={'COMPRAR'} onPress={addAndGoToCart}/>
+                        </>
+                    )}
                 </Container>
             </ScrollView>
         </BaseContainer>

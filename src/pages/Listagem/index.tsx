@@ -11,6 +11,8 @@ import { ToastLayout } from "../../components/ToastLayout";
 import { useCarrinhoStore } from "../../store/carrinho.store";
 import { PRIMARY } from "../../styles/colors";
 import { BUTTON_CARD_HEIGHT } from "../../components/ButtonCard/styles";
+import { useHistoricoStore } from "../../store/historico.store";
+import { useAuth } from "../../hooks/Auth.hooks";
 
 interface ItemsProps{
     id: number;
@@ -31,6 +33,9 @@ export const Listagem: React.FC = () => {
     const [last, setLast] = useState<boolean>(false);
     const toast = useToast();
     const navigation = useNavigation<any>();
+    const {user} = useAuth();
+    const loadData = useHistoricoStore(state => state.loadData);
+
     const addItem = useCarrinhoStore(state => state.addItem);
     
     const getData = async (pageNumber: number = 1) => {
@@ -101,6 +106,9 @@ export const Listagem: React.FC = () => {
 
     useEffect(() => {
         getData();
+        if (user) {
+            loadData(user?.id, user?.email);
+        }
     }, []);
 
     return (
