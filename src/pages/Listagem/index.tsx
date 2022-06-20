@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import style, { Container, Title, TitleBold } from "./styles";
 import { useNavigation } from '@react-navigation/native';
 import { Header } from "../../components/Header";
@@ -10,6 +10,7 @@ import { useToast } from "native-base";
 import { ToastLayout } from "../../components/ToastLayout";
 import { useCarrinhoStore } from "../../store/carrinho.store";
 import { PRIMARY } from "../../styles/colors";
+import { BUTTON_CARD_HEIGHT } from "../../components/ButtonCard/styles";
 
 interface ItemsProps{
     id: number;
@@ -32,14 +33,6 @@ export const Listagem: React.FC = () => {
     const navigation = useNavigation<any>();
     const addItem = useCarrinhoStore(state => state.addItem);
     
-    const addCart = (item: ItemsProps) => {
-        addItem({
-            jogoId: item.id,
-            titulo: item.name,
-            valor: item.value,
-        })
-    }
-
     const getData = async (pageNumber: number = 1) => {
         if (!last) {
             try {
@@ -47,7 +40,7 @@ export const Listagem: React.FC = () => {
                 const response = await api.get('games', {
                     params: {
                         _page: pageNumber,
-                        _limit: 2,
+                        _limit: 6,
                     }
                 });
                 if (pageNumber == 1) {
@@ -86,6 +79,26 @@ export const Listagem: React.FC = () => {
         setRefreshing(false);
     }
 
+    const addCart = useCallback((item: ItemsProps) => {
+        addItem({
+            jogoId: item.id,
+            titulo: item.name,
+            valor: item.value,
+        })
+    }, [addItem]);
+
+    const renderItem = useCallback(({item}) => (
+        <ButtonCard
+            item={item}
+            activeId={active}
+            setActive={setActive}
+            addCart={addCart}
+            goToDetail={(id) => {
+                navigation.navigate('Detalhes', {id})
+            }}
+        />
+    ), [active, setActive, addCart, navigation.navigate]);
+
     useEffect(() => {
         getData();
     }, []);
@@ -97,17 +110,7 @@ export const Listagem: React.FC = () => {
             </Header>
             <Container>                
                 <FlatList<ItemsProps>
-                    renderItem={({item}) => (
-                        <ButtonCard
-                            item={item}
-                            activeId={active}
-                            setActive={setActive}
-                            addCart={addCart}
-                            goToDetail={(id) => {
-                                navigation.push('Detalhes', {id})
-                            }}
-                        />
-                    )}
+                    renderItem={renderItem}
                     keyExtractor={(item) => `${item.id}`}
                     style={style.flatList}
                     numColumns={2}
@@ -122,6 +125,9 @@ export const Listagem: React.FC = () => {
                             return null;
                         }
                     }}
+                    getItemLayout={(data, index) => (
+                        {length: BUTTON_CARD_HEIGHT, offset: BUTTON_CARD_HEIGHT * index, index}
+                    )}
                 />
             </Container>
         </BaseContainer>

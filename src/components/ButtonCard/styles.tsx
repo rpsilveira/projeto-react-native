@@ -1,5 +1,7 @@
 import styled from "styled-components/native";
 
+export const BUTTON_CARD_HEIGHT = 195;
+
 export const ItemTitle = styled.Text`
     font-size: 16px;
     line-height: 16px;
@@ -13,7 +15,7 @@ export const ItemTitleBold = styled.Text`
 `
 export const ImageCard = styled.ImageBackground`
     flex: 1;
-    height: 195px;
+    height: ${BUTTON_CARD_HEIGHT}px;
     margin: 10px;
     border-radius: ${props => props.theme.measure.radius}px;
     overflow: hidden;

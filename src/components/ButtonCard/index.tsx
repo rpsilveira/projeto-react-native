@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import { ContainerCard, ImageCard, ItemTitle, ItemTitleBold } from "./styles";
 import { DefaultButton } from "../../components/BaseButton";
 import { NativeModules, LayoutAnimation, TouchableWithoutFeedback } from "react-native";
@@ -25,7 +25,7 @@ interface ButtonCardProps{
     activeId?: number;
 }
 
-export const ButtonCard: React.FC<ButtonCardProps> = ({item, goToDetail, addCart, activeId, setActive}) => {
+const ButtonCardComponent: React.FC<ButtonCardProps> = ({item, goToDetail, addCart, activeId, setActive}) => {
     
     const changeActive = () => {
         LayoutAnimation.linear();
@@ -53,3 +53,5 @@ export const ButtonCard: React.FC<ButtonCardProps> = ({item, goToDetail, addCart
         </TouchableWithoutFeedback>
     )
 }
+
+export const ButtonCard = memo<ButtonCardProps>(ButtonCardComponent);
