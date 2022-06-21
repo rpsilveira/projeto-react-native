@@ -1,5 +1,4 @@
 import styled, {css} from "styled-components/native";
-import { FontAwesome5 } from '@expo/vector-icons'
 import color from "color";
 
 export const Container = styled.View`
@@ -75,22 +74,4 @@ export const Text = styled.Text<TextProps>`
         max-width: ${props.maxWidth}px;
     `)};
     text-align: ${props => props.align?props.align:'left'};
-`
-
-interface ActionColumnProps {
-    maxWidth?: number;
-}
-
-export const ActionColumn = styled.View<ActionColumnProps>`
-    flex: 1;
-    ${props => (props.maxWidth&&css`
-        max-width: ${props.maxWidth}px;
-    `)};
-    padding-right: 10px;
-    justify-content: center;
-    align-items: center;
-`
-
-export const Trash = styled(FontAwesome5)`
-    color: ${props => props.theme.colors.danger};
 `

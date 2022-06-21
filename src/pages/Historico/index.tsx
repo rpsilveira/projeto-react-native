@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Title, Text, ItemContainer, ActionColumn, Trash } from "./styles";
+import { Box, Container, Title, Text, ItemContainer } from "./styles";
 import { Header } from "../../components/Header";
 import { ScrollView } from "react-native";
 import { BaseContainer } from "../../components/BaseContainer";

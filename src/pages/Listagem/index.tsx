@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import style, { Container, Title, TitleBold } from "./styles";
 import { useNavigation } from '@react-navigation/native';
 import { Header } from "../../components/Header";
@@ -13,6 +13,7 @@ import { PRIMARY } from "../../styles/colors";
 import { BUTTON_CARD_HEIGHT } from "../../components/ButtonCard/styles";
 import { useHistoricoStore } from "../../store/historico.store";
 import { useAuth } from "../../hooks/Auth.hooks";
+import { Input } from "../../components/Input";
 
 interface ItemsProps{
     id: number;
@@ -26,6 +27,7 @@ interface ItemsProps{
 export const Listagem: React.FC = () => {
 
     const [active, setActive] = useState<number>();
+    const [pesquisa, setPesquisa] = useState<string>('');
     const [page, setPage] = useState<number>(1);
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -104,6 +106,10 @@ export const Listagem: React.FC = () => {
         />
     ), [active, setActive, addCart, navigation.navigate]);
 
+    const filtro = useMemo(
+        () => !!pesquisa ? list.filter(item => item.name.toUpperCase().includes(pesquisa.toUpperCase())) : list
+    , [pesquisa, list])
+
     useEffect(() => {
         getData();
         if (user) {
@@ -116,13 +122,18 @@ export const Listagem: React.FC = () => {
             <Header backFalse>
                 <Title><TitleBold>My</TitleBold>Collection</Title>
             </Header>
-            <Container>                
+            <Container>
+                <Input
+                    placeholder="Pesquisar"
+                    onChangeText={setPesquisa}
+                    value={pesquisa}
+                />
                 <FlatList<ItemsProps>
                     renderItem={renderItem}
                     keyExtractor={(item) => `${item.id}`}
                     style={style.flatList}
                     numColumns={2}
-                    data={list}
+                    data={filtro}
                     refreshing={refreshing}
                     onRefresh={reset}
                     onEndReached={updateDate}
