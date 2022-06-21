@@ -13,6 +13,7 @@ import { ToastLayout } from "../../components/ToastLayout";
 import { api } from "../../api";
 import { Input } from "../../components/Input";
 import { ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
@@ -20,6 +21,7 @@ export const Perfil: React.FC = () => {
     const [loading, setLoad] = useState<boolean>(false)
     
     const toast = useToast();
+    const navigation = useNavigation<any>();
     const { user, logout } = useAuth();
     
     const { control, handleSubmit, formState: {errors} } = useForm({
@@ -73,7 +75,11 @@ export const Perfil: React.FC = () => {
             })
         }
         setLoad(false);
-    }    
+    }
+
+    const goToHistorico = () => {
+        navigation.navigate('Historico');
+    }
 
     return (
         <BaseContainer>
@@ -158,6 +164,7 @@ export const Perfil: React.FC = () => {
                     />
 
                     <Button title={'ALTERAR SENHA'} loading={loading} onPress={handleSubmit(onSubmit)}/>
+                    <Button title={'MEU HISTÓRICO DE COMPRAS'} loading={loading} onPress={goToHistorico}/>
                     <Button style={{backgroundColor: DANGER}} title={'DESCONECTAR'} loading={loading} onPress={logout}/>
                 </Container>
             </ScrollView>

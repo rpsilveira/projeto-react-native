@@ -11,11 +11,13 @@ import { useAuth } from "../../hooks/Auth.hooks";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../api";
 import { ToastLayout } from "../../components/ToastLayout";
+import { useHistoricoStore } from "../../store/historico.store";
 
 export const Carrinho: React.FC = () => {
 
     const removeItemStore = useCarrinhoStore(state => state.removeItem);
     const carrinho = useCarrinhoStore(state => state.carrinho);
+    const loadData = useHistoricoStore(state => state.loadData);
     const clear = useCarrinhoStore(state => state.clear);
     const [itemWillDeleted, setItemWillDeleted] = useState<ItemCarrinho|undefined>(undefined);
     const [load, setload] = useState<boolean>(false);
@@ -38,12 +40,16 @@ export const Carrinho: React.FC = () => {
         setload(true);
         try{
             if (user) {
+                const dt = new Date();
                 await api.post('pedidos', {
                     userId: user.id,
                     userEmail: user.email,
                     total: total,
+                    data: dt.toLocaleDateString(),
+                    hora: dt.toLocaleTimeString(),
                     items: carrinho
                 });
+                loadData(user.id, user.email);
                 setload(false);
                 clear();
                 navigation.navigate('Início');
