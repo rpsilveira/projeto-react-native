@@ -19,10 +19,12 @@ Para configurar o ambiente, visite: [Environment setup](https://reactnative.dev/
 
 #### `yarn`
 
-2. Para executar o server json (simula um servidor api), execute:
+2. Para executar o server json (simula um servidor api), execute o seguinte comando no terminal:
 
 #### `yarn json-server server.json`
 
-3. Para executar o app no emulador, utilize o comando:
+3. Para executar o app no emulador, execute um dos comandos abaixo no terminal (em uma nova janela):
 
 #### `yarn android`
+ou
+#### `yarn ios`
