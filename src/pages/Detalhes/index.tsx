@@ -36,18 +36,27 @@ export const Detalhes: React.FC = () => {
         () => !!data ? historico.map(itemHistorico => itemHistorico.jogoId).includes(data.id) : false
     ,[historico, data]);
 
-    const addCart = () => {
+    const addCart = (notify: boolean=true) => {
         if (data) {
             addItem({
                 jogoId: data.id,
                 titulo: data.name,
                 valor: data.value,
-            })
+            });
+
+            if (notify) {
+                toast.show({
+                    placement: "top-right",
+                    render:({id}) => {
+                        return ToastLayout.success({id, description: 'Jogo adicionado no carrinho', close: toast.close})
+                    }
+                })
+            }
         }
     }    
 
     const addAndGoToCart = () => {
-        addCart();
+        addCart(false);
         navigation.goBack();
         navigation.navigate('Carrinho');
     }

@@ -102,7 +102,7 @@ export const Carrinho: React.FC = () => {
                             </ActionColumn>
                             <Text>{item.titulo}</Text>
                             <Text maxWidth={80} align={'right'}>R$ {formatNumber(item.valor, 2)}</Text>
-                        </ItemContainer>                       
+                        </ItemContainer>
                     ))}
 
                     <ItemContainer borderTop>
