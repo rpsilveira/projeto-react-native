@@ -1,6 +1,5 @@
-import { BACKGROUND_COLOR, PRIMARY, SECONDARY } from "../../styles/colors";
+import { PLACEHOLDER_COLOR, PRIMARY, SECONDARY } from "../../styles/colors";
 import { Button, Container, ContainerSwitch, LabelSwitch, Link, Switch, Title, TitleBold } from "./styles";
-import color from "color";
 import React, { useEffect, useState } from 'react'
 import { BaseContainer } from "../../components/BaseContainer";
 import { useNavigation } from '@react-navigation/native';
@@ -12,8 +11,6 @@ import { useToast } from "native-base";
 import { ToastLayout } from "../../components/ToastLayout";
 import { api } from "../../api";
 import { useAuth, UserProps } from "../../hooks/Auth.hooks";
-
-const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
 export const Login: React.FC = () => {
     const [saveLogin, setSaveLogin] = useState<boolean>(false)

@@ -1,6 +1,5 @@
-import { BACKGROUND_COLOR, DANGER } from "../../styles/colors";
+import { DANGER, PLACEHOLDER_COLOR } from "../../styles/colors";
 import { Button, Container } from "./styles";
-import color from "color";
 import React, { useState } from 'react'
 import { Header } from "../../components/Header";
 import { BaseContainer } from "../../components/BaseContainer";
@@ -14,8 +13,6 @@ import { api } from "../../api";
 import { Input } from "../../components/Input";
 import { ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
-const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
 export const Perfil: React.FC = () => {
     const [loading, setLoad] = useState<boolean>(false)

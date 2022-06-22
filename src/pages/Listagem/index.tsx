@@ -9,7 +9,7 @@ import { api } from "../../api";
 import { useToast } from "native-base";
 import { ToastLayout } from "../../components/ToastLayout";
 import { useCarrinhoStore } from "../../store/carrinho.store";
-import { PRIMARY } from "../../styles/colors";
+import { PLACEHOLDER_COLOR, PRIMARY } from "../../styles/colors";
 import { BUTTON_CARD_HEIGHT } from "../../components/ButtonCard/styles";
 import { useHistoricoStore } from "../../store/historico.store";
 import { useAuth } from "../../hooks/Auth.hooks";
@@ -124,8 +124,11 @@ export const Listagem: React.FC = () => {
             </Header>
             <Container>
                 <Input
-                    placeholder="Pesquisar"
+                    search
+                    placeholder="PESQUISAR"
+                    placeholderTextColor = {PLACEHOLDER_COLOR}
                     onChangeText={setPesquisa}
+                    clearInput={() => setPesquisa('')}
                     value={pesquisa}
                 />
                 <FlatList<ItemsProps>

@@ -1,6 +1,5 @@
-import { BACKGROUND_COLOR } from "../../styles/colors";
+import { PLACEHOLDER_COLOR } from "../../styles/colors";
 import { Button, Container } from "./styles";
-import color from "color";
 import React, { useState } from 'react'
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
@@ -12,8 +11,6 @@ import { useToast } from "native-base";
 import { ToastLayout } from "../../components/ToastLayout";
 import { api } from "../../api";
 import { useNavigation } from "@react-navigation/native";
-
-const PLACEHOLDER_COLOR = color(BACKGROUND_COLOR).lighten(0.5).hex();
 
 export const Cadastro: React.FC = () => {
     const [loading, setLoad] = useState<boolean>(false)
