@@ -95,12 +95,12 @@ export const Carrinho: React.FC = () => {
                         <Title maxWidth={80} align={'right'}>VALOR</Title>
                     </Box>
 
-                    {carrinho.map(item => (
-                        <ItemContainer key={`item-${item.jogoId}`}>
+                    {carrinho.map((item, index) => (
+                        <ItemContainer key={`item-${item.jogoId}`} even={(index +1) %2 == 0}>
                             <ActionColumn maxWidth={71}>
                                 <Trash name='trash-alt' size={20} onPress={removeItem(item)}/>
                             </ActionColumn>
-                            <Text>{item.titulo}</Text>
+                            <Text ellipsizeMode={'tail'} numberOfLines={1}>{item.titulo}</Text>
                             <Text maxWidth={80} align={'right'}>R$ {formatNumber(item.valor, 2)}</Text>
                         </ItemContainer>
                     ))}
